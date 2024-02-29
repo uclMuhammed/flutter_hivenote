@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hivenote/note/item/note_item.dart';
 import 'package:flutter_hivenote/note/service/note_service.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class NoteEditPage extends StatefulWidget {
   final int index;
