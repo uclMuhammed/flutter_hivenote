@@ -2,7 +2,7 @@ import 'package:flutter_hivenote/note/item/note_item.dart';
 import 'package:hive/hive.dart';
 
 class NoteService {
-  late String _noteBox = 'notes';
+  late final String _noteBox = 'notes';
 
   Future<Box<NoteItem>> get _box async =>
       await Hive.openBox<NoteItem>(_noteBox);

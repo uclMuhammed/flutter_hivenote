@@ -1,11 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-part 'theme_model.g.dart';
+class ThemeModel extends ChangeNotifier {
+  final ValueNotifier<bool> isDarkMode;
 
-@HiveType(typeId: 0)
-class ThemeModel extends HiveObject {
-  @HiveField(0)
-  bool isDarkMode;
+  ThemeModel(bool darkMode) : isDarkMode = ValueNotifier<bool>(darkMode);
 
-  ThemeModel({required this.isDarkMode});
+  void toggleTheme() {
+    isDarkMode.value = !isDarkMode.value;
+    Hive.box('themeBox').put('isDarkMode', isDarkMode.value);
+  }
 }

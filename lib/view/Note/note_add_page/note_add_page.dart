@@ -1,30 +1,44 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hivenote/note/item/note_item.dart';
 import 'package:flutter_hivenote/note/service/note_service.dart';
+import 'package:flutter_hivenote/view/camera/take_picture_screen/take_picture_screen.dart';
 
-class NoteEditPage extends StatefulWidget {
-  final int index;
-  final NoteItem? note;
-  const NoteEditPage({super.key, required this.index, this.note});
+class NoteAddPage extends StatefulWidget {
+  const NoteAddPage({super.key});
 
   @override
-  State<NoteEditPage> createState() => _NoteEditPageState();
+  State<NoteAddPage> createState() => _NoteAddPageState();
 }
 
-class _NoteEditPageState extends State<NoteEditPage> {
+class _NoteAddPageState extends State<NoteAddPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController title = TextEditingController();
-  final TextEditingController description = TextEditingController();
+  TextEditingController title = TextEditingController();
+  TextEditingController description = TextEditingController();
+  final NoteService service = NoteService();
   @override
   Widget build(BuildContext context) {
-    title.text = widget.note!.title;
-    description.text = widget.note!.description;
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (context, BoxConstraints constraints) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Note Edit Page'),
+            title: const Text('Note Add Page'),
             centerTitle: true,
+            actions: [
+              IconButton(
+                  onPressed: () async {
+                    final cameras = await availableCameras();
+                    final firstCamera = cameras.first;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            TakePictureScreen(camera: firstCamera),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.camera_alt))
+            ],
           ),
           body: SingleChildScrollView(
             child: Form(
@@ -66,36 +80,18 @@ class _NoteEditPageState extends State<NoteEditPage> {
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                _updateNote();
+                var note = NoteItem(title.text, description.text);
+                service.addNote(note);
+                title.clear();
+                description.clear();
+                Navigator.pop(context);
               }
             },
-            child: const Icon(Icons.edit),
+            child: const Text('Add'),
           ),
         );
       },
     );
-  }
-
-  void _updateNote() async {
-    // Yeni not verilerini oluşturun
-    NoteItem updatedNote = NoteItem(
-      title.text,
-      description.text,
-    );
-
-    // Notu güncellemek için servisi kullanın
-    NoteService noteService = NoteService();
-    await noteService.updateNote(widget.index, updatedNote);
-
-    // Geri git
-    Navigator.pop(context);
-  }
-
-  @override
-  void dispose() {
-    title.dispose();
-    description.dispose();
-    super.dispose();
   }
 
   InputDecoration textFormFieldDecoration(String label) {

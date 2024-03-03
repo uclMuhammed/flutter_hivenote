@@ -2,25 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hivenote/note/item/note_item.dart';
 import 'package:flutter_hivenote/note/service/note_service.dart';
 
-class NoteAddPage extends StatefulWidget {
-  const NoteAddPage({super.key});
+class NoteEditPage extends StatefulWidget {
+  final int index;
+  final NoteItem? note;
+  const NoteEditPage({super.key, required this.index, this.note});
 
   @override
-  State<NoteAddPage> createState() => _NoteAddPageState();
+  State<NoteEditPage> createState() => _NoteEditPageState();
 }
 
-class _NoteAddPageState extends State<NoteAddPage> {
+class _NoteEditPageState extends State<NoteEditPage> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController title = TextEditingController();
-  TextEditingController description = TextEditingController();
-  final NoteService service = NoteService();
+  final TextEditingController title = TextEditingController();
+  final TextEditingController description = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    title.text = widget.note!.title;
+    description.text = widget.note!.description;
     return LayoutBuilder(
-      builder: (context, BoxConstraints constraints) {
+      builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Note Add Page'),
+            title: const Text('Note Edit Page'),
             centerTitle: true,
           ),
           body: SingleChildScrollView(
@@ -63,19 +66,37 @@ class _NoteAddPageState extends State<NoteAddPage> {
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                var note =
-                    NoteItem(title.text, description.text);
-                service.addNote(note);
-                title.clear();
-                description.clear();
-                Navigator.pop(context);
+                _updateNote();
               }
             },
-            child: const Text('Add'),
+            child: const Icon(Icons.edit),
           ),
         );
       },
     );
+  }
+
+  void _updateNote() async {
+    // Yeni not verilerini oluşturun
+    NoteItem updatedNote = NoteItem(
+      title.text,
+      description.text,
+    );
+
+    // Notu güncellemek için servisi kullanın
+    NoteService noteService = NoteService();
+    await noteService.updateNote(widget.index, updatedNote);
+
+    // Geri git
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    title.dispose();
+    description.dispose();
+    super.dispose();
   }
 
   InputDecoration textFormFieldDecoration(String label) {
