@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hivenote/view/camera/display_picture_screen/display_picture_screen.dart';
+import '../display_picture_screen/display_picture_screen.dart';
 
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -42,21 +42,17 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          try {
-            await _initializeControllerFuture;
-            final image = await cameraController.takePicture();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    DisplayPictureScreen(imagePath: image.path),
-              ),
-            );
-          } catch (e) {
-            print(e);
-          }
+          await _initializeControllerFuture;
+          final image = await cameraController.takePicture();
+          Navigator.push(
+            // ignore: use_build_context_synchronously
+            context,
+            MaterialPageRoute(
+              builder: (context) => DisplayPictureScreen(imagePath: image.path),
+            ),
+          );
         },
-        child: Icon(Icons.camera),
+        child: const Icon(Icons.camera),
       ),
     );
   }

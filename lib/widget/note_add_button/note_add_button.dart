@@ -1,6 +1,5 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hivenote/view/note/note_add_page/note_add_page.dart';
+import 'package:flutter_hivenote/view/note/note_add_screen/note_add_screen.dart';
 
 class NoteAddButton extends StatefulWidget {
   const NoteAddButton({
@@ -15,15 +14,16 @@ class _NoteAddButtonState extends State<NoteAddButton> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      child: const Icon(Icons.add),
+      backgroundColor: Theme.of(context).hintColor,
       onPressed: () async {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => NoteAddPage(),
+            builder: (context) => const NoteAddScreen(),
           ),
         );
       },
+      child: const Icon(Icons.add),
     );
   }
 }

@@ -1,22 +1,14 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter_hivenote/note/item/note_item.dart';
-import 'package:flutter_hivenote/note/service/note_service.dart';
-import 'package:flutter_hivenote/theme/model/theme_model.dart';
-
-import 'package:flutter_hivenote/view/note/note_edit_page/note_edit_page.dart';
+import 'package:flutter_hivenote/view/note/note_edit_screen/note_edit_screen.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:theme/index.dart';
 
 class NoteList extends StatefulWidget {
-  const NoteList({
-    super.key,
-    required this.noteService,
-  });
-
+  const NoteList({super.key, required this.noteService});
   final NoteService noteService;
-
   @override
   State<NoteList> createState() => _NoteListState();
 }
@@ -24,11 +16,10 @@ class NoteList extends StatefulWidget {
 class _NoteListState extends State<NoteList> {
   @override
   Widget build(BuildContext context) {
-    //  final themeProvider = Provider.of<ThemeProvider>(context);
-    return Consumer<ThemeModel>(
+    return Consumer<ThemeNotifier>(
       builder: (context, theme, _) {
         return ValueListenableBuilder(
-          valueListenable: Hive.box<NoteItem>('notes').listenable(),
+          valueListenable: Hive.box<Note>('notes').listenable(),
           builder: (context, box, _) {
             return ListView.builder(
               itemCount: box.values.length,
@@ -38,12 +29,10 @@ class _NoteListState extends State<NoteList> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: theme.isDarkMode.value
-                          ? Colors.deepPurple
-                          : Colors.deepPurple.shade200,
+                      color: Theme.of(context).hintColor,
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: [
-                        theme.isDarkMode.value
+                        theme.isDarkMode
                             ? const BoxShadow(
                                 color: Colors.white10,
                                 offset: Offset(-3, 3),
@@ -66,14 +55,14 @@ class _NoteListState extends State<NoteList> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NoteEditPage(
+                                builder: (context) => NoteEditScreen(
                                   index: index,
                                   note: note,
                                 ),
                               ),
                             );
                           },
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: Theme.of(context).hintColor,
                           icon: Icons.edit,
                           borderRadius: const BorderRadius.only(
                             bottomRight: Radius.circular(5),

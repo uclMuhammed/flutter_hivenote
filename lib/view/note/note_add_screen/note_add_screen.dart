@@ -1,17 +1,17 @@
 import 'package:camera/camera.dart';
+import 'package:core/model/note/note.dart';
+import 'package:core/model/service/service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hivenote/note/item/note_item.dart';
-import 'package:flutter_hivenote/note/service/note_service.dart';
-import 'package:flutter_hivenote/view/camera/take_picture_screen/take_picture_screen.dart';
+import 'package:flutter_hivenote/view/photo/camera/take_picture_screen/take_picture_screen.dart';
 
-class NoteAddPage extends StatefulWidget {
-  const NoteAddPage({super.key});
+class NoteAddScreen extends StatefulWidget {
+  const NoteAddScreen({super.key});
 
   @override
-  State<NoteAddPage> createState() => _NoteAddPageState();
+  State<NoteAddScreen> createState() => _NoteAddScreenState();
 }
 
-class _NoteAddPageState extends State<NoteAddPage> {
+class _NoteAddScreenState extends State<NoteAddScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
@@ -80,7 +80,13 @@ class _NoteAddPageState extends State<NoteAddPage> {
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                var note = NoteItem(title.text, description.text);
+                var note = Note(
+                  title: title.text,
+                  description: description.text,
+                  checkBox: false,
+                  favorite: false,
+                  showDescription: false,
+                );
                 service.addNote(note);
                 title.clear();
                 description.clear();

@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
 
-  const DisplayPictureScreen({Key? key, required this.imagePath}) : super(key: key);
+  const DisplayPictureScreen({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Display the picture')),
+      appBar: AppBar(title: const Text('Display the picture')),
       body: Image.file(File(imagePath)),
     );
   }

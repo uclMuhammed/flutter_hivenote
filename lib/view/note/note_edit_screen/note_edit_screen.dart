@@ -1,17 +1,17 @@
+import 'package:core/model/note/note.dart';
+import 'package:core/model/service/service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hivenote/note/item/note_item.dart';
-import 'package:flutter_hivenote/note/service/note_service.dart';
 
-class NoteEditPage extends StatefulWidget {
+class NoteEditScreen extends StatefulWidget {
   final int index;
-  final NoteItem? note;
-  const NoteEditPage({super.key, required this.index, this.note});
+  final Note? note;
+  const NoteEditScreen({super.key, required this.index, this.note});
 
   @override
-  State<NoteEditPage> createState() => _NoteEditPageState();
+  State<NoteEditScreen> createState() => _NoteEditScreenState();
 }
 
-class _NoteEditPageState extends State<NoteEditPage> {
+class _NoteEditScreenState extends State<NoteEditScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController title = TextEditingController();
   final TextEditingController description = TextEditingController();
@@ -78,9 +78,12 @@ class _NoteEditPageState extends State<NoteEditPage> {
 
   void _updateNote() async {
     // Yeni not verilerini oluşturun
-    NoteItem updatedNote = NoteItem(
-      title.text,
-      description.text,
+    Note updatedNote = Note(
+      title: title.text,
+      description: description.text,
+      checkBox: false,
+      favorite: false,
+      showDescription: false,
     );
 
     // Notu güncellemek için servisi kullanın
