@@ -39,9 +39,9 @@ dependencies:
   camera: ^0.10.5+9
 
   core:
-    path: "modul/core"
+    path: "module/core"
   theme:
-    path: "modul/theme"
+    path: "module/theme"
 
 
   # The following adds the Cupertino Icons font to your application.

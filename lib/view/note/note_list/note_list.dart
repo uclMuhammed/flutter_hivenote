@@ -1,11 +1,11 @@
-import 'package:core/core.dart';
+import 'package:core/model/note/note.dart';
+import 'package:core/model/service/service.dart';
+import 'package:theme/theme/theme_notifier/theme_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hivenote/view/note/note_edit_screen/note_edit_screen.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:theme/index.dart';
-
 class NoteList extends StatefulWidget {
   const NoteList({super.key, required this.noteService});
   final NoteService noteService;

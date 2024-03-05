@@ -196,7 +196,7 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "modul/core"
+      path: "module/core"
       relative: true
     source: path
     version: "0.0.1"
@@ -687,7 +687,7 @@ packages:
   theme:
     dependency: "direct main"
     description:
-      path: "modul/theme"
+      path: "module/theme"
       relative: true
     source: path
     version: "0.0.1"

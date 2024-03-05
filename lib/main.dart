@@ -1,10 +1,12 @@
-import 'package:core/core.dart';
+import 'package:core/model/note/note.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hivenote/view/note/note_list_screen.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:theme/index.dart';
+import 'package:theme/theme/app_theme/dark.dart';
+import 'package:theme/theme/app_theme/light.dart';
+import 'package:theme/theme/theme_notifier/theme_notifier.dart';
 
 void main() async {
   /* WidgetsFlutterBinding.ensureInitialized();
