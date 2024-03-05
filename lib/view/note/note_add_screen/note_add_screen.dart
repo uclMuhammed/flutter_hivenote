@@ -30,6 +30,7 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
                     final cameras = await availableCameras();
                     final firstCamera = cameras.first;
                     Navigator.push(
+                      // ignore: use_build_context_synchronously
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
